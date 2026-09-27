@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}{{ site.name }}{% endblock %} | {{ site.id }}</title>
+  <meta name="description" content="{{ site.desc }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+  <style>:root{--design-gradient:{{site.gradient}}}</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="{{ page_url(site,'home') }}">
+    <small>{{ site.id }}</small><strong>{{ site.name }}</strong>
+  </a>
+  <nav>
+    <a href="{{ page_url(site,'home') }}">Home</a>
+    <a href="{{ page_url(site,'services') }}">Services</a>
+    <a href="{{ page_url(site,'contact') }}">Contact</a>
+  </nav>
+  <a class="nav-cta" href="{{ page_url(site,'contact') }}">{{ site.cta }}</a>
+</header>
+{% block content %}{% endblock %}
+<footer class="site-footer">
+  <div><strong>{{site.name}}</strong><span>{{site.id}} · {{site.style}} · {{site.palette}}</span></div>
+  <span>{{site.location}}</span>
+  <span>© 2026</span>
+</footer>
+</body>
+</html>
