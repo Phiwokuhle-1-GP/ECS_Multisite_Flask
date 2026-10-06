@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ settings.seo_title }}</title>
+  <meta name="description" content="{{ settings.seo_description }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/ecs_home.css') }}">
+  <style>
+    :root{--primary:{{settings.primary_color}};--secondary:{{settings.secondary_color}};--accent:{{settings.accent_color}}}
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand-lockup"><div class="ecs-mark">{{settings.brand_short}}</div><div><strong>{{settings.brand_name}}</strong><small>{{settings.tagline}}</small></div></div>
+  <nav><a href="#offer">Offer</a><a href="#designs">Designs</a><a href="#how">How it works</a><a href="#contact">Contact</a></nav>
+  <a class="top-cta" href="{{ settings.cta_url if settings.cta_url else (('https://wa.me/' ~ settings.whatsapp) if settings.whatsapp else '#contact') }}">Get my website</a>
+</header>
+
+<main>
+<section class="hero" id="offer">
+  <div class="hero-copy">
+    <p class="kicker">{{settings.hero_kicker}}</p>
+    <h1>{{settings.hero_title}} <span>{{settings.price}}</span></h1>
+    <h2>{{settings.price_note}}</h2>
+    <p class="lead">{{settings.hero_text}}</p>
+    <div class="hero-actions"><a class="primary-cta" href="{{ settings.cta_url if settings.cta_url else (('https://wa.me/' ~ settings.whatsapp) if settings.whatsapp else '#contact') }}">{{settings.cta_text}}</a><a class="secondary-cta" href="/catalogue">View 20 designs</a></div>
+  </div>
+  <div class="device-stage">
+    <div class="glow"></div>
+    <div class="laptop">
+      <div class="screen">
+        <div class="screen-nav"><b>ECS</b><span>Home&nbsp;&nbsp; Services&nbsp;&nbsp; About&nbsp;&nbsp; Contact</span><em>Get a Quote</em></div>
+        <div class="screen-hero" {% if settings.hero_image_url %}style="background-image:linear-gradient(90deg,rgba(3,23,48,.9),rgba(3,23,48,.25)),url('{{settings.hero_image_url}}')"{% endif %}>
+          <small>WEBSITES FOR SMALL BUSINESSES</small><h3>Professional Websites That Grow Your Business</h3><p>Modern. Affordable. Built for results.</p><button>Get Started</button>
+        </div>
+        <div class="screen-features"><span>Modern Design</span><span>SEO Ready</span><span>Mobile Friendly</span><span>Built for Growth</span></div>
+      </div>
+      <div class="base"></div>
+    </div>
+    <div class="phone"><div class="phone-notch"></div><b>ECS</b><h4>Grow Your Business Online</h4><p>Professional websites built for growth.</p><button>Get Started</button></div>
+  </div>
+</section>
+
+<section class="benefits">
+  {% for i in range(1,7) %}
+  <article><div class="icon">{{ ['▣','◎','▤','▥','▯','●'][i-1] }}</div><div><h3>{{ settings['benefit_' ~ i ~ '_title'] }}</h3><p>{{ settings['benefit_' ~ i ~ '_text'] }}</p></div></article>
+  {% endfor %}
+</section>
+
+<section class="designs" id="designs"><div><p class="section-kicker">20+ PROFESSIONAL DESIGNS</p><h2>Choose a style that fits your business</h2><p>Corporate, small business, education, e-commerce and transport templates are ready to customise.</p></div><a href="/catalogue">Browse design catalogue →</a></section>
+
+<section class="how" id="how"><p class="section-kicker">SIMPLE · FAST · STRESS-FREE</p><h2>How it works</h2><div class="steps"><article><b>1</b><h3>Choose a design</h3><p>Select a template from the catalogue.</p></article><article><b>2</b><h3>Send your info</h3><p>Business name, logo, services, contacts and photos.</p></article><article><b>3</b><h3>We build it</h3><p>ECS customises your site with your brand and content.</p></article><article><b>4</b><h3>Approve it</h3><p>Review the website and request included minor changes.</p></article><article><b>5</b><h3>We launch it</h3><p>We connect your domain, SSL and hosting.</p></article></div></section>
+
+<section class="pricing"><div class="price-card"><small>STARTER WEBSITE</small><h2>{{settings.price}}</h2><p>{{settings.price_note}}</p><a class="primary-cta" href="{{ settings.cta_url if settings.cta_url else (('https://wa.me/' ~ settings.whatsapp) if settings.whatsapp else '#contact') }}">{{settings.cta_text}}</a></div><div class="renewal"><small>FROM YEAR 2</small><h2>{{settings.annual_fee}}</h2><p>{{settings.annual_text}}</p></div></section>
+
+<section class="industries"><p class="section-kicker">BUILT FOR SMALL BUSINESSES</p><h2>Ideal for businesses like yours</h2><div class="industry-grid">{% for item in settings.industries_list %}<span>{{item}}</span>{% endfor %}</div></section>
+
+<section class="final-cta" id="contact"><div><h2>Your business deserves a professional website</h2><p>Get your website, domain and first year of hosting in one simple package.</p></div><a class="primary-cta" href="{{ settings.cta_url if settings.cta_url else (('https://wa.me/' ~ settings.whatsapp) if settings.whatsapp else '#contact') }}">{{settings.cta_text}}</a></section>
+</main>
+<footer><div class="brand-lockup"><div class="ecs-mark">{{settings.brand_short}}</div><div><strong>{{settings.brand_name}}</strong><small>{{settings.tagline}}</small></div></div><div>{{settings.location}}</div><div>{{settings.website}}</div></footer>
+</body></html>

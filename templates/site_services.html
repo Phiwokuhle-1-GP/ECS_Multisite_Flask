@@ -1,16 +1,6 @@
 {% extends 'site_base.html' %}
-{% block title %}Services · {{site.name}}{% endblock %}
 {% block content %}
-<section class="page-hero" style="background:{{site.gradient}}">
-  <p class="eyebrow">{{site.category|upper}}</p><h1>Services built around your customer.</h1><p>{{site.desc}}</p>
-</section>
-<section class="content-section">
-  <p class="section-kicker">SERVICES</p><h2>Three clear reasons to choose you</h2>
-  <div class="cards large">
-  {% for service in site.services %}
-    <article><b>0{{loop.index}}</b><h3>{{service}}</h3><p>This service block is driven by the central site configuration. Change the wording once and the selected client site updates while the shared engine stays untouched.</p><a href="{{page_url(site,'contact')}}">Enquire →</a></article>
-  {% endfor %}
-  </div>
-</section>
-<section class="cta-band" style="background:{{site.gradient}}"><div><h2>Need a custom service mix?</h2><p>The client can have different services, colours, content and images while staying on the same Render service.</p></div><a class="primary" href="{{page_url(site,'contact')}}">{{site.cta}} →</a></section>
+<section class="page-hero" style="background:{{site.gradient}}"><p class="eyebrow">SERVICES</p><h1>How {{site.business_name}} can help</h1><p>{{site.hero_text}}</p></section>
+<section class="content-section"><div class="cards service-detail">{% for service in site.services %}<article><b>0{{loop.index}}</b><h2>{{service}}</h2><p>Clear, reliable service tailored to the customer’s needs. Replace this copy in the V3 admin dashboard.</p><a href="{{page_url(site,'contact')}}">Enquire →</a></article>{% endfor %}</div></section>
+<section class="cta-band" style="background:{{site.gradient}}"><div><h2>Need a quote or more information?</h2><p>Contact {{site.business_name}} today.</p></div><a class="primary" href="{{page_url(site,'contact')}}">{{site.cta_text}} →</a></section>
 {% endblock %}

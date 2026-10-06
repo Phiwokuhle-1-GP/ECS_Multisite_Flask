@@ -3,26 +3,46 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{% block title %}{{ site.name }}{% endblock %} | {{ site.id }}</title>
-  <meta name="description" content="{{ site.desc }}">
+  {% set page_name = 'home' if request.endpoint in ['root','preview_home'] else ('services' if 'services' in request.endpoint else 'contact') %}
+  {% set page_title = (site.seo_title or site.business_name) if page_name == 'home' else (('Services | ' ~ site.business_name) if page_name == 'services' else ('Contact | ' ~ site.business_name)) %}
+  {% set page_description = (site.seo_description or site.desc) if page_name == 'home' else (('Explore ' ~ site.business_name ~ ' services in ' ~ (site.location or site.service_area or 'your area') ~ '.') if page_name == 'services' else ('Contact ' ~ site.business_name ~ ' for information, pricing or a quote in ' ~ (site.location or site.service_area or 'your area') ~ '.')) %}
+  <title>{{ page_title }}</title>
+  <meta name="description" content="{{ page_description }}">
+  {% if preview %}<meta name="robots" content="noindex,nofollow">{% else %}<meta name="robots" content="{{ 'index,follow' if site.robots_index else 'noindex,nofollow' }}">{% endif %}
+  <link rel="canonical" href="{{ canonical_url(site,page_name) }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.business_name }}">
+  <meta property="og:title" content="{{ site.og_title or page_title }}">
+  <meta property="og:description" content="{{ site.og_description or page_description }}">
+  <meta property="og:url" content="{{ canonical_url(site,page_name) }}">
+  {% if site.og_image_url or site.hero_image_url %}<meta property="og:image" content="{{ site.og_image_url or site.hero_image_url }}">{% endif %}
+  <meta name="twitter:card" content="{{ 'summary_large_image' if site.og_image_url or site.hero_image_url else 'summary' }}">
+  <meta name="twitter:title" content="{{ site.og_title or page_title }}">
+  <meta name="twitter:description" content="{{ site.og_description or page_description }}">
+  <script type="application/ld+json">{{ local_business_schema(site)|safe }}</script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
-  <style>:root{--design-gradient:{{site.gradient}}}</style>
+  <style>:root{--design-gradient:{{site.gradient}};--primary:{{site.primary_color}};--secondary:{{site.secondary_color}}}</style>
 </head>
 <body>
+{% if preview %}<div class="preview-ribbon">PREVIEW · {{site.slug}} · {{site.design_id}}</div>{% endif %}
 <header class="site-header">
   <a class="brand" href="{{ page_url(site,'home') }}">
-    <small>{{ site.id }}</small><strong>{{ site.name }}</strong>
+    {% if site.logo_url %}<img src="{{site.logo_url}}" alt="{{site.business_name}} logo">{% endif %}
+    <span><small>{{ site.design_id }}</small><strong>{{ site.business_name }}</strong></span>
   </a>
   <nav>
     <a href="{{ page_url(site,'home') }}">Home</a>
     <a href="{{ page_url(site,'services') }}">Services</a>
     <a href="{{ page_url(site,'contact') }}">Contact</a>
   </nav>
-  <a class="nav-cta" href="{{ page_url(site,'contact') }}">{{ site.cta }}</a>
+  <a class="nav-cta" href="{{ page_url(site,'contact') }}">{{ site.cta_text }}</a>
 </header>
+{% with messages=get_flashed_messages(with_categories=true) %}
+  {% if messages %}<div class="site-flashes">{% for category,message in messages %}<div class="flash {{category}}">{{message}}</div>{% endfor %}</div>{% endif %}
+{% endwith %}
 {% block content %}{% endblock %}
 <footer class="site-footer">
-  <div><strong>{{site.name}}</strong><span>{{site.id}} · {{site.style}} · {{site.palette}}</span></div>
+  <div><strong>{{site.business_name}}</strong><span>{{site.design_id}} · {{site.style}} · {{site.palette}}</span></div>
   <span>{{site.location}}</span>
   <span>© 2026</span>
 </footer>

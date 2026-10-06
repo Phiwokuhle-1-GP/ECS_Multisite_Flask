@@ -1,18 +1,10 @@
 {% extends 'site_base.html' %}
-{% block title %}Contact · {{site.name}}{% endblock %}
 {% block content %}
-<section class="page-hero" style="background:{{site.gradient}}">
-  <p class="eyebrow">CONTACT</p><h1>Start a conversation.</h1><p>Use this page as the conversion point for {{site.name}}.</p>
-</section>
-<section class="contact-grid content-section">
-  <div class="contact-card"><p class="section-kicker">CONTACT DETAILS</p><h2>{{site.name}}</h2><p>{{site.location}}</p><p><strong>Phone</strong><br><a href="tel:{{site.phone}}">{{site.phone}}</a></p><p><strong>Email</strong><br><a href="mailto:{{site.email}}">{{site.email}}</a></p><a class="whatsapp" href="https://wa.me/{{site.whatsapp}}">WhatsApp →</a></div>
-  <form class="enquiry-form" onsubmit="event.preventDefault();document.getElementById('thanks').hidden=false">
-    <label>Name<input required placeholder="Your name"></label>
-    <label>Phone<input required placeholder="Your phone number"></label>
-    <label>Email<input type="email" placeholder="you@example.com"></label>
-    <label>How can we help?<textarea rows="6" placeholder="Tell us what you need"></textarea></label>
-    <button type="submit">Send enquiry →</button>
-    <p id="thanks" hidden class="thanks">Demo enquiry captured on-screen. V2 can connect this to your shared database.</p>
+<section class="page-hero" style="background:{{site.gradient}}"><p class="eyebrow">CONTACT</p><h1>Let’s talk.</h1><p>{{site.business_name}} · {{site.location}}</p></section>
+<section class="content-section contact-grid">
+  <div class="contact-card"><p class="section-kicker">CONTACT DETAILS</p><h2>{{site.business_name}}</h2><p><strong>Phone</strong><br><a href="tel:{{site.phone}}">{{site.phone}}</a></p><p><strong>Email</strong><br><a href="mailto:{{site.email}}">{{site.email}}</a></p>{% if site.whatsapp %}<p><a class="primary inline" href="https://wa.me/{{site.whatsapp}}">WhatsApp us</a></p>{% endif %}<p>{{site.location}}</p></div>
+  <form class="enquiry-form" method="post">
+    <h2>Send an enquiry</h2><label>Name<input name="name" required></label><label>Phone<input name="phone"></label><label>Email<input type="email" name="email"></label><label>How can we help?<textarea name="message" rows="6" required></textarea></label><button class="primary" type="submit">Send enquiry →</button>
   </form>
 </section>
 {% endblock %}

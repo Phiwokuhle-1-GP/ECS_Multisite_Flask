@@ -1,44 +1,32 @@
 {% extends 'site_base.html' %}
 {% block content %}
-<section class="design-hero" style="background:{{site.gradient}}">
+<section class="design-hero hero-with-image" style="background:{{site.gradient}}">
   <div class="hero-copy">
     <p class="eyebrow">{{site.eyebrow}}</p>
-    <h1>{{site.hero}}</h1>
-    <p>{{site.desc}} This live Flask version preserves the visual direction of the original {{site.id}} catalogue concept and can be customised per client.</p>
+    <h1>{{site.hero_title}}</h1>
+    <p>{{site.hero_text}}</p>
     <div class="hero-actions">
-      <a class="primary" href="{{page_url(site,'contact')}}">{{site.cta}} →</a>
+      <a class="primary" href="{{page_url(site,'contact')}}">{{site.cta_text}} →</a>
       <a class="secondary" href="{{page_url(site,'services')}}">View services</a>
     </div>
   </div>
-  <div class="browser-stage" aria-hidden="true">
-    <div class="browser-bar"><i></i><i></i><i></i></div>
-    <div class="browser-screen">
-      <small>{{site.category|upper}}</small>
-      <strong>{{site.name}}</strong>
-      <span>{{site.style}} · {{site.palette}}</span>
-      <b>YOUR BRAND</b>
+  {% if site.hero_image_url %}
+    <div class="hero-photo"><img src="{{site.hero_image_url}}" alt="{{site.image_alt or site.business_name}}"></div>
+  {% else %}
+    <div class="browser-stage" aria-hidden="true">
+      <div class="browser-bar"><i></i><i></i><i></i></div>
+      <div class="browser-screen"><small>{{site.category|upper}}</small><strong>{{site.business_name}}</strong><span>{{site.style}} · {{site.palette}}</span><b>YOUR BRAND</b></div>
     </div>
-  </div>
+  {% endif %}
 </section>
-
 <section class="content-section intro-grid">
-  <div><p class="section-kicker">DESIGN DIRECTION</p><h2>{{site.name}}</h2></div>
-  <div><p>{{site.desc}}</p><p><strong>Layout:</strong> {{site.layout}} &nbsp; <strong>Style:</strong> {{site.style}}</p></div>
+  <div><p class="section-kicker">WHY CHOOSE US</p><h2>{{site.business_name}}</h2></div>
+  <div><p>{{site.hero_text}}</p><p><strong>Serving:</strong> {{site.location}}</p></div>
 </section>
-
 <section class="content-section services-preview">
-  <p class="section-kicker">WHAT WE DO</p>
-  <h2>Clear services. Strong presentation.</h2>
-  <div class="cards">
-    {% for service in site.services %}
-    <article><b>0{{loop.index}}</b><h3>{{service}}</h3><p>Explain the strongest customer benefit simply, confidently and with a clear next action.</p></article>
-    {% endfor %}
-  </div>
+  <p class="section-kicker">WHAT WE DO</p><h2>Services built around your needs.</h2>
+  <div class="cards">{% for service in site.services %}<article><b>0{{loop.index}}</b><h3>{{service}}</h3><p>Professional, responsive service with a clear next step.</p></article>{% endfor %}</div>
   <a class="text-link" href="{{page_url(site,'services')}}">Explore all services →</a>
 </section>
-
-<section class="cta-band" style="background:{{site.gradient}}">
-  <div><p class="eyebrow">{{site.id}}</p><h2>Make this design yours.</h2><p>Colours, typography, sections, images, content and calls to action can all be changed without creating another Flask application.</p></div>
-  <a class="primary" href="{{page_url(site,'contact')}}">Start a conversation →</a>
-</section>
+<section class="cta-band" style="background:{{site.gradient}}"><div><p class="eyebrow">{{site.location}}</p><h2>Ready to get started?</h2><p>Call, WhatsApp or send an enquiry and we’ll get back to you.</p></div><a class="primary" href="{{page_url(site,'contact')}}">{{site.cta_text}} →</a></section>
 {% endblock %}
